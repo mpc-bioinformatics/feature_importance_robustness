@@ -1,2 +1,6 @@
 # feature_importance_robustness
-Scripts used to determine the robustness of feature importance methods on a sepsis clinical dataset
+
+Machine learning models are on the rise in medical research fields yet are rarely implemented in the everyday clinical practice. This is mostly due to a lack of trust of humans towards the artificial intelligence. An approach to solve this issue is performed by so called feature importance methods, which try to explain the model decision making. There are several methods for feature importance, post hoc ones like permutation feature importance (PFI) and SHapley Additive exPlanations (SHAP) and intrinsic ones like mean decrease in impurity (MDI). Here, we train random forest models to predict 30 day survival and compare those feature importance methods on a real-world Sepsis dataset and check how similar their results are and how robust the most important features are in three different scenarios. The first explores the intrinsic randomness of a random forest model, the second variations introduced by different training set splits, and the third explores hidden patterns in a nonsense model.
+Our results show that SHAP and MDI perform in a similar matter, whilst PFI shows the greatest variance in feature ranks. All methods differ in their 10 key features based on the chosen test set. Our suggested approach is to combine several feature importance methods and to keep in mind that a feature might not stay important if another slice of the data is used for training.  
+
+
