@@ -1,6 +1,3 @@
-import csv
-import copy
-import timeit
 import json
 import joblib
 import os
@@ -8,25 +5,17 @@ import sys
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import plotly.express as px
-import scikitplot as skplt
 import shap
 import re
 import argparse
 import sklearn
-from numpy import mean, std
-from pathlib import Path
 from sklearn import metrics
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.impute import SimpleImputer
-from sklearn.metrics import roc_curve, auc, confusion_matrix
-from sklearn.model_selection import cross_val_score
+from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
 from sklearn.inspection import permutation_importance
 from sklearn.utils import resample
-from sklearn.inspection import PartialDependenceDisplay
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.preprocessing import StandardScaler
 import random
 from sklearn.utils import shuffle
 
@@ -60,21 +49,18 @@ AUC = []
 """ global Parameters """
 SEED = None #206
 THRESHOLD = 0.5
-MIN_SAMPLES_LEAF = 8 #2
-MIN_SAMPLES_SPLIT = 10 #10
+MIN_SAMPLES_LEAF = 8 
+MIN_SAMPLES_SPLIT = 10 
 N_ESTIMATORS = 1200
 MAX_DEPTH = 6
 CLASS_WEIGHT = "balanced"
 TARGET_VARIABLE = "DEATH"
 
-SAVE_FIGURES = "no" # put "yes" if you want pictures
-
-
 
 def run_rf(number):
     """main function to run the training of the random forest"""
 
-    data_path = "/Users/webermac/Projekte/feature_importance_all/data_2024/no_correlation_07_KKB.csv"
+    data_path = args.input
     stats["used_data"] = data_path
     # create data sets 
     x_train, x_test, y_train, y_test, columns, features = load_and_split_data(data_path)
@@ -103,9 +89,9 @@ def load_and_split_data(data_path: str):
     """remove special characters from colum names"""
     data = data_full.rename(columns=lambda x: re.sub('[^A-Za-z0-9_]+', '', x))
 
-    data = data.drop(["Unnamed0"],axis=1) # "PSN" #"Unnamed0"
+    data = data.drop(["Unnamed0"],axis=1)
     #top 5 of all three methods: Lactate, Normoblasten, proBNP, Peep, thrombocytes
-    data = data[[TARGET_VARIABLE, "labor_Lactat", "labor_Normoblasten", "labor_Thrombozyten", "beatmung_PEEP", "labor_proBNP"]]
+  #  data = data[[TARGET_VARIABLE, "labor_Lactat", "labor_Normoblasten", "labor_Thrombozyten", "beatmung_PEEP", "labor_proBNP"]]
     data = data.astype("float")
     
     data = data.dropna(subset=[TARGET_VARIABLE])
