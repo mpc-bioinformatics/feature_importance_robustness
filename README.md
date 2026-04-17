@@ -1,12 +1,12 @@
 # feature_importance_robustness
 
-Background:
+## Background:
 Machine learning or artificial intelligence (AI) models are on the rise in medical research fields yet are rarely implemented in the everyday clinical practice. This is mostly due to a lack of trust of humans towards the “black box” that provides answers without their derivation. An approach to solve this issue are feature importance methods, falling under the umbrella term eXplainable Artifical Intelligence (XAI), which try to provide human-interpretable evidence for the model's decision making. There are several methods for determining feature importance, as in post hoc methods like permutation feature importance (PFI) and SHapley Additive exPlanations (SHAP) as well as intrinsic methods like mean decrease in impurity (MDI). However, it is not well tested how similar the results of those methods are.
-Methods:
+## Methods:
 Here, we train random forest models to predict 30 day survival of sepsis patients in the ICU and evaluate the behavior three feature importance methods (SHAP, PFI, MDI) on a real-world data set. This is assessed by three scenarios: First, models are trained on a fixed data split to isolate the effect of randomness within the forest itself. Secondly, varying data splits are used to capture both model randomness and dataset heterogeneity. Thirdly, labels are randomly shuffled as a negative control, where no real signal exists and all features should appear equally important.
-Findings:
+## Findings:
 Our results show that PFI is more sensible and displays a higher variance, but is not affected by the cardinality of features or categorical features. Our nonsense models revealed tendencies for SHAP and MDI to favor high cardinal features and disfavor categorical features. Using a ranked approach for feature importance in cross-validation achieved the most overlap of key features for all three methods. 
-Interpretation:
+## Interpretation:
 Our suggested approach is to apply several feature importance methods and apply them to a cross-validation to acquire more robust key features, instead of using a single split of the data set and therefore improve the trust clinicians have in those methods.
 
 
